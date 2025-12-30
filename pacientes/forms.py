@@ -4,12 +4,6 @@ from .models import Paciente
 
 class PacienteForm(forms.ModelForm):
 
-    data_nascimento = forms.DateField(
-        widget=forms.DateInput(
-            attrs={'type': 'date'}
-        )
-    )
-
     class Meta:
         model = Paciente
         fields = [
@@ -35,20 +29,100 @@ class PacienteForm(forms.ModelForm):
         ]
 
         widgets = {
-            'sexo': forms.Select(attrs={'class': 'form-select'}),
-            'estado_civil': forms.Select(attrs={'class': 'form-select'}),
-            'ativo': forms.CheckboxInput(),
+            # Documentos
+            'cns': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Cartão Nacional de Saúde',
+                'maxlength': '15'
+            }),
+            'cpf': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'CPF',
+                'maxlength': '11'
+            }),
+
+            # Dados pessoais
+            'nome_completo': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nome completo'
+            }),
+            'nome_social': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nome social'
+            }),
+            'data_nascimento': forms.DateInput(attrs={
+                'class': 'form-control',
+                'type': 'date'
+            }),
+            'sexo': forms.Select(attrs={
+                'class': 'form-select'
+            }),
+            'estado_civil': forms.Select(attrs={
+                'class': 'form-select'
+            }),
+            'nome_mae': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nome da mãe'
+            }),
+            'nome_pai': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nome do pai'
+            }),
+
+            # Contato
+            'telefone': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': '(00) 00000-0000'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'email@exemplo.com'
+            }),
+
+            # Endereço
+            'cep': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': '00000-000'
+            }),
+            'logradouro': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Rua / Avenida'
+            }),
+            'numero': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Número'
+            }),
+            'complemento': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Complemento'
+            }),
+            'bairro': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Bairro'
+            }),
+            'cidade': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Cidade'
+            }),
+            'Estado': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Estado'
+            }),
+
+            # Status
+            'ativo': forms.CheckboxInput(attrs={
+                'class': 'form-check-input'
+            }),
         }
 
     # Validação do CNS (15 dígitos)
     def clean_cns(self):
         cns = self.cleaned_data.get('cns')
 
-        if not cns.isdigit() or len(cns) != 15:
+        if not cns or not cns.isdigit() or len(cns) != 15:
             raise forms.ValidationError(
                 "O CNS deve conter exatamente 15 dígitos numéricos."
             )
-
         return cns
 
     # Validação simples do CPF (opcional)
@@ -60,5 +134,6 @@ class PacienteForm(forms.ModelForm):
                 raise forms.ValidationError(
                     "O CPF deve conter 11 dígitos numéricos."
                 )
-
         return cpf
+
+
