@@ -1,16 +1,120 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="container mt-4">
-    <h3 class="display-4">Detalhes do Paciente </h3>
+<div class="container mt-4">
 
-    <div class="card">
-      <div class="card-body">
-        <h3 class="card-title">{{ object.nome_completo }}</h3>
-        <p class="card-text">{{ object.cpf }}</p>
+  <!-- CABEÇALHO CLÍNICO -->
+  <div class="card mb-3 shadow-sm">
+    <div class="card-body py-3">
+      <div class="d-flex justify-content-between align-items-center">
+
+        <div>
+          <h4 class="mb-1 fw-semibold">{{ object.nome_completo }}</h4>
+          <small class="text-muted">
+            CNS: {{ object.cns }} |
+            CPF: {{ object.cpf|default:"—" }}
+          </small>
+        </div>
+
+        <div class="text-end">
+          {% if object.ativo %}
+            <span class="badge bg-success fs-6">Ativo</span>
+          {% else %}
+            <span class="badge bg-danger fs-6">Inativo</span>
+          {% endif %}
+        </div>
+
       </div>
     </div>
-
-    <a href="{% url 'pacientes:list' %}" class="btn btn-secondary mt-3">Voltar para a Lista de Pacientes</a>
   </div>
+
+  <!-- DADOS GERAIS -->
+  <div class="card shadow-sm">
+    <div class="card-body">
+
+      <!-- IDENTIFICAÇÃO -->
+      <table class="table table-sm table-borderless mb-4">
+        <tbody>
+          <tr>
+            <th style="width: 20%">Nome Social</th>
+            <td style="width: 30%">{{ object.nome_social|default:"—" }}</td>
+            <th style="width: 20%">Nascimento</th>
+            <td style="width: 30%">{{ object.data_nascimento|date:"d/m/Y" }}</td>
+          </tr>
+          <tr>
+            <th>Sexo</th>
+            <td>{{ object.get_sexo_display }}</td>
+            <th>Estado Civil</th>
+            <td>{{ object.get_estado_civil_display|default:"—" }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- FILIAÇÃO -->
+      <h6 class="text-secondary mb-2">Filiação</h6>
+      <table class="table table-sm table-bordered mb-4">
+        <tbody>
+          <tr>
+            <th style="width: 20%">Mãe</th>
+            <td>{{ object.nome_mae }}</td>
+          </tr>
+          <tr>
+            <th>Pai</th>
+            <td>{{ object.nome_pai|default:"—" }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- CONTATO -->
+      <h6 class="text-secondary mb-2">Contato</h6>
+      <table class="table table-sm table-bordered mb-4">
+        <tbody>
+          <tr>
+            <th style="width: 20%">Telefone</th>
+            <td style="width: 30%">{{ object.telefone|default:"—" }}</td>
+            <th style="width: 20%">E-mail</th>
+            <td style="width: 30%">{{ object.email|default:"—" }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ENDEREÇO -->
+      <h6 class="text-secondary mb-2">Endereço</h6>
+      <table class="table table-sm table-bordered">
+        <tbody>
+          <tr>
+            <th style="width: 20%">Logradouro</th>
+            <td colspan="3">
+              {{ object.logradouro }}, {{ object.numero }}
+              {% if object.complemento %} – {{ object.complemento }}{% endif %}
+            </td>
+          </tr>
+          <tr>
+            <th>Bairro</th>
+            <td style="width: 30%">{{ object.bairro }}</td>
+            <th>Cidade / UF</th>
+            <td style="width: 30%">{{ object.cidade }} / {{ object.estado }}</td>
+          </tr>
+          <tr>
+            <th>CEP</th>
+            <td>{{ object.cep }}</td>
+            <td colspan="2"></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <!-- AÇÕES -->
+  <div class="mt-4 d-flex gap-2">
+    <a href="{% url 'pacientes:list' %}" class="btn btn-outline-secondary">
+      Voltar
+    </a>
+    <a href="#" class="btn btn-outline-warning">
+      Editar Cadastro
+    </a>
+  </div>
+
+</div>
 {% endblock %}
