@@ -1,6 +1,7 @@
 from django.urls import reverse_lazy 
 
-from django.views.generic import ListView, CreateView
+
+from django.views.generic import ListView, CreateView, DetailView
 
 from  . import models, forms
 class PacienteListView(ListView):
@@ -23,3 +24,8 @@ class PacienteCreateView(CreateView):
     form_class = forms.PacienteForm
     success_url = reverse_lazy('pacientes:list')
     
+
+class PacienteDetailView(DetailView):
+    model = models.Paciente
+    template_name = 'paciente_detail.html'
+    permission_required = 'pacientes:DetailView'

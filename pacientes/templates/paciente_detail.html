@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h3 class="display-4">Detalhes do Paciente </h3>
+
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">{{ object.nome_completo }}</h3>
+        <p class="card-text">{{ object.cpf }}</p>
+      </div>
+    </div>
+
+    <a href="{% url 'pacientes:list' %}" class="btn btn-secondary mt-3">Voltar para a Lista de Pacientes</a>
+  </div>
+{% endblock %}
