@@ -1,7 +1,8 @@
+from django.urls import reverse_lazy 
 
-from django.views.generic import ListView
-from  . import models
+from django.views.generic import ListView, CreateView
 
+from  . import models, forms
 class PacienteListView(ListView):
     model = models.Paciente
     template_name = 'paciente_list.html'
@@ -15,3 +16,10 @@ class PacienteListView(ListView):
             queryset = queryset.filter(nome_completo__icontains=nome_completo)
 
         return queryset
+    
+class PacienteCreateView(CreateView):
+    model = models.Paciente
+    template_name = 'paciente_create.html'
+    form_class = forms.PacienteForm
+    success_url = reverse_lazy('pacientes:list')
+    
