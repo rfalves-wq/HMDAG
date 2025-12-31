@@ -111,9 +111,10 @@
     <a href="{% url 'pacientes:list' %}" class="btn btn-outline-secondary">
       Voltar
     </a>
-    <a href="#" class="btn btn-outline-warning">
-      Editar Cadastro
-    </a>
+    <a href="{% url 'pacientes:update' paciente.id %}"
+   class="btn btn-outline-warning">
+  Editar Cadastro
+</a>
   </div>
 
 </div>
