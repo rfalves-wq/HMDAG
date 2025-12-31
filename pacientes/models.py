@@ -21,16 +21,22 @@ class Paciente(models.Model):
 
     # Identificação SUS
     cns = models.CharField(
-    max_length=18,  # 000 0000 0000 0000
-    unique=True,
-    verbose_name="Cartão Nacional de Saúde (CNS)"
-)
+        max_length=18,
+        unique=True,
+        verbose_name="Cartão Nacional de Saúde (CNS)",
+        error_messages={
+            'unique': 'Já existe um paciente cadastrado com este CNS.'
+        }
+    )
 
     cpf = models.CharField(
         max_length=14,
         unique=True,
         null=True,
-        blank=True
+        blank=True,
+        error_messages={
+            'unique': 'Já existe um paciente cadastrado com este CPF.'
+        }
     )
     UF_CHOICES = [
     ('AC', 'Acre'),

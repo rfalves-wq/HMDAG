@@ -3,7 +3,9 @@
 {% block content %}
 <div class="container mt-4">
 
-  <center><h3 class="mb-4">Cadastrar Paciente</h3></center>
+  <center>
+    <h3 class="mb-4">Cadastrar Paciente</h3>
+  </center>
 
   <div class="card">
     <div class="card-body">
@@ -41,17 +43,22 @@
 
         <!-- NOMES -->
         <div class="row mb-3">
-          <div class="col-md-8">
+          <div class="col-md-6">
             <label class="form-label">Nome Completo</label>
             {{ form.nome_completo }}
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-3">
             <label class="form-label">Nome Social</label>
             {{ form.nome_social }}
           </div>
+           <div class="col-md-3">
+          <label class="form-label">Estado Civil</label>
+          {{ form.estado_civil }}
+        </div>
         </div>
 
+       
         <!-- FILIAÇÃO -->
         <div class="row mb-3">
           <div class="col-md-6">
@@ -145,65 +152,65 @@
 </div>
 
 <script>
-const cpf = document.getElementById("id_cpf");
+  const cpf = document.getElementById("id_cpf");
 
-if (cpf) {
-  cpf.addEventListener("input", function () {
-    let v = this.value.replace(/\D/g, "").slice(0, 11);
+  if (cpf) {
+    cpf.addEventListener("input", function () {
+      let v = this.value.replace(/\D/g, "").slice(0, 11);
 
-    v = v.replace(/(\d{3})(\d)/, "$1.$2");
-    v = v.replace(/(\d{3})(\d)/, "$1.$2");
-    v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+      v = v.replace(/(\d{3})(\d)/, "$1.$2");
+      v = v.replace(/(\d{3})(\d)/, "$1.$2");
+      v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
 
-    this.value = v;
-  });
-}
+      this.value = v;
+    });
+  }
 </script>
 
 <script>
-const cns = document.getElementById("id_cns");
+  const cns = document.getElementById("id_cns");
 
-if (cns) {
-  cns.addEventListener("input", function () {
-    let v = this.value.replace(/\D/g, "").slice(0, 15);
+  if (cns) {
+    cns.addEventListener("input", function () {
+      let v = this.value.replace(/\D/g, "").slice(0, 15);
 
-    v = v.replace(/(\d{3})(\d)/, "$1 $2");
-    v = v.replace(/(\d{4})(\d)/, "$1 $2");
-    v = v.replace(/(\d{4})(\d)/, "$1 $2");
+      v = v.replace(/(\d{3})(\d)/, "$1 $2");
+      v = v.replace(/(\d{4})(\d)/, "$1 $2");
+      v = v.replace(/(\d{4})(\d)/, "$1 $2");
 
-    this.value = v;
-  });
-}
+      this.value = v;
+    });
+  }
 </script>
 
 <script>
-const telefone = document.getElementById("id_telefone");
+  const telefone = document.getElementById("id_telefone");
 
-if (telefone) {
-  telefone.addEventListener("input", function () {
-    let v = this.value.replace(/\D/g, "").slice(0, 11);
+  if (telefone) {
+    telefone.addEventListener("input", function () {
+      let v = this.value.replace(/\D/g, "").slice(0, 11);
 
-    v = v.replace(/^(\d{2})(\d)/, "($1) $2");
-    v = v.replace(/(\d{5})(\d{4})$/, "$1-$2");
+      v = v.replace(/^(\d{2})(\d)/, "($1) $2");
+      v = v.replace(/(\d{5})(\d{4})$/, "$1-$2");
 
-    this.value = v;
-  });
-}
+      this.value = v;
+    });
+  }
 </script>
 
 
 <script>
-const cep = document.getElementById("id_cep");
+  const cep = document.getElementById("id_cep");
 
-if (cep) {
-  cep.addEventListener("input", function () {
-    let v = this.value.replace(/\D/g, "").slice(0, 8);
+  if (cep) {
+    cep.addEventListener("input", function () {
+      let v = this.value.replace(/\D/g, "").slice(0, 8);
 
-    v = v.replace(/(\d{5})(\d)/, "$1-$2");
+      v = v.replace(/(\d{5})(\d)/, "$1-$2");
 
-    this.value = v;
-  });
-}
+      this.value = v;
+    });
+  }
 </script>
 
 {% endblock %}

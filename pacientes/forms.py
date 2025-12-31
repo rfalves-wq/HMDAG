@@ -1,6 +1,5 @@
 import re
 from django import forms
-
 from .models import Paciente
 
 
@@ -31,25 +30,21 @@ class PacienteForm(forms.ModelForm):
         ]
 
         widgets = {
-          'cns': forms.TextInput(attrs={
-    'class': 'form-control',
-    'placeholder': '000 0000 0000 0000',
-    'maxlength': '18'
-}),
-          'cpf': forms.TextInput(attrs={
-    'class': 'form-control',
-    'placeholder': '000.000.000-00',
-    'maxlength': '14'
-}),
-
-            # Dados pessoais
-            'nome_completo': forms.TextInput(attrs={
+            'cns': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Nome completo'
+                'placeholder': '000 0000 0000 0000',
+                'maxlength': '18'
+            }),
+            'cpf': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': '000.000.000-00',
+                'maxlength': '14'
+            }),
+            'nome_completo': forms.TextInput(attrs={
+                'class': 'form-control'
             }),
             'nome_social': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Nome social'
+                'class': 'form-control'
             }),
             'data_nascimento': forms.DateInput(attrs={
                 'class': 'form-control',
@@ -62,144 +57,117 @@ class PacienteForm(forms.ModelForm):
                 'class': 'form-select'
             }),
             'nome_mae': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Nome da mãe'
+                'class': 'form-control'
             }),
             'nome_pai': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Nome do pai'
+                'class': 'form-control'
             }),
-
-            # Contato
-           'telefone': forms.TextInput(attrs={
-    'class': 'form-control',
-    'placeholder': '(00) 00000-0000',
-    'maxlength': '15'
-}),
+            'telefone': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': '(00) 00000-0000',
+                'maxlength': '15'
+            }),
             'email': forms.EmailInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'email@exemplo.com'
+                'class': 'form-control'
             }),
-
-            # Endereço
-           'cep': forms.TextInput(attrs={
-    'class': 'form-control',
-    'placeholder': '00000-000',
-    'maxlength': '9'
-}),
-            'logradouro': forms.TextInput(attrs={
+            'cep': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Rua / Avenida'
+                'placeholder': '00000-000',
+                'maxlength': '9'
+            }),
+            'logradouro': forms.TextInput(attrs={
+                'class': 'form-control'
             }),
             'numero': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Número'
+                'class': 'form-control'
             }),
             'complemento': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Complemento'
+                'class': 'form-control'
             }),
             'bairro': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Bairro'
+                'class': 'form-control'
             }),
             'cidade': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Cidade'
+                'class': 'form-control'
             }),
-            'Estado': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Estado'
+            'estado': forms.Select(attrs={
+                'class': 'form-select'
             }),
-
-            # Status
             'ativo': forms.CheckboxInput(attrs={
                 'class': 'form-check-input'
             }),
         }
 
-   
+    # ================= CPF =================
+    def clean_cpf(self):
+        cpf = self.cleaned_data.get('cpf')
 
-def clean_cpf(self):
-    cpf = self.cleaned_data.get('cpf')
+        if not cpf:
+            return cpf
 
-    if not cpf:
-        return cpf
+        cpf = re.sub(r'\D', '', cpf)
 
-    # remove qualquer máscara
-    numeros = re.sub(r'\D', '', cpf)
+        if len(cpf) != 11 or cpf == cpf[0] * 11:
+            raise forms.ValidationError("CPF inválido.")
 
-    if len(numeros) != 11:
-        raise forms.ValidationError(
-            "O CPF deve conter 11 dígitos."
+        soma = sum(int(cpf[i]) * (10 - i) for i in range(9))
+        resto = (soma * 10) % 11
+        resto = 0 if resto == 10 else resto
+
+        if resto != int(cpf[9]):
+            raise forms.ValidationError("CPF inválido.")
+
+        soma = sum(int(cpf[i]) * (11 - i) for i in range(10))
+        resto = (soma * 10) % 11
+        resto = 0 if resto == 10 else resto
+
+        if resto != int(cpf[10]):
+            raise forms.ValidationError("CPF inválido.")
+
+        return f"{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
+
+    # ================= CNS =================
+    def clean_cns(self):
+        cns = self.cleaned_data.get('cns')
+
+        if not cns:
+            raise forms.ValidationError("O CNS é obrigatório.")
+
+        numeros = re.sub(r'\D', '', cns)
+
+        if len(numeros) != 15:
+            raise forms.ValidationError("CNS inválido.")
+
+        return f"{numeros[:3]} {numeros[3:7]} {numeros[7:11]} {numeros[11:]}"
+
+    # ================= TELEFONE =================
+    def clean_telefone(self):
+        telefone = self.cleaned_data.get('telefone')
+
+        if not telefone:
+            return telefone
+
+        numeros = re.sub(r'\D', '', telefone)
+
+        if len(numeros) not in (10, 11):
+            raise forms.ValidationError("Telefone inválido.")
+
+        return (
+            f"({numeros[:2]}) {numeros[2:7]}-{numeros[7:]}"
+            if len(numeros) == 11
+            else f"({numeros[:2]}) {numeros[2:6]}-{numeros[6:]}"
         )
 
-    # SALVA COM MÁSCARA NO BANCO
-    cpf_formatado = (
-        f"{numeros[:3]}."
-        f"{numeros[3:6]}."
-        f"{numeros[6:9]}-"
-        f"{numeros[9:]}"
-    )
+    # ================= CEP =================
+    def clean_cep(self):
+        cep = self.cleaned_data.get('cep')
 
-    return cpf_formatado
+        if not cep:
+            return cep
 
+        numeros = re.sub(r'\D', '', cep)
 
-def clean_cns(self):
-    cns = self.cleaned_data.get('cns')
+        if len(numeros) != 8:
+            raise forms.ValidationError("CEP inválido.")
 
-    if not cns:
-        raise forms.ValidationError(
-            "O CNS é obrigatório."
-        )
-
-    # remove qualquer máscara
-    numeros = re.sub(r'\D', '', cns)
-
-    if len(numeros) != 15:
-        raise forms.ValidationError(
-            "O CNS deve conter exatamente 15 dígitos."
-        )
-
-    # SALVA COM MÁSCARA NO BANCO
-    cns_formatado = (
-        f"{numeros[:3]} "
-        f"{numeros[3:7]} "
-        f"{numeros[7:11]} "
-        f"{numeros[11:]}"
-    )
-
-    return cns_formatado
-
-def clean_telefone(self):
-    telefone = self.cleaned_data.get('telefone')
-
-    if not telefone:
-        return telefone
-
-    numeros = re.sub(r'\D', '', telefone)
-
-    if len(numeros) not in [10, 11]:
-        raise forms.ValidationError(
-            "O telefone deve conter 10 ou 11 dígitos."
-        )
-
-    # celular com 9 dígitos
-    if len(numeros) == 11:
-        return f"({numeros[:2]}) {numeros[2:7]}-{numeros[7:]}"
-    # fixo
-    return f"({numeros[:2]}) {numeros[2:6]}-{numeros[6:]}"
-
-def clean_cep(self):
-    cep = self.cleaned_data.get('cep')
-
-    numeros = re.sub(r'\D', '', cep)
-
-    if len(numeros) != 8:
-        raise forms.ValidationError(
-            "O CEP deve conter 8 dígitos."
-        )
-
-    # SALVA COM MÁSCARA
-    return f"{numeros[:5]}-{numeros[5:]}"
-
+        return f"{numeros[:5]}-{numeros[5:]}"
