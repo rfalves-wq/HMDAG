@@ -21,17 +21,47 @@ class Paciente(models.Model):
 
     # Identificação SUS
     cns = models.CharField(
-        max_length=15,
-        unique=True,
-        verbose_name="Cartão Nacional de Saúde (CNS)"
-    )
+    max_length=18,  # 000 0000 0000 0000
+    unique=True,
+    verbose_name="Cartão Nacional de Saúde (CNS)"
+)
 
     cpf = models.CharField(
-        max_length=11,
+        max_length=14,
         unique=True,
         null=True,
         blank=True
     )
+    UF_CHOICES = [
+    ('AC', 'Acre'),
+    ('AL', 'Alagoas'),
+    ('AP', 'Amapá'),
+    ('AM', 'Amazonas'),
+    ('BA', 'Bahia'),
+    ('CE', 'Ceará'),
+    ('DF', 'Distrito Federal'),
+    ('ES', 'Espírito Santo'),
+    ('GO', 'Goiás'),
+    ('MA', 'Maranhão'),
+    ('MT', 'Mato Grosso'),
+    ('MS', 'Mato Grosso do Sul'),
+    ('MG', 'Minas Gerais'),
+    ('PA', 'Pará'),
+    ('PB', 'Paraíba'),
+    ('PR', 'Paraná'),
+    ('PE', 'Pernambuco'),
+    ('PI', 'Piauí'),
+    ('RJ', 'Rio de Janeiro'),
+    ('RN', 'Rio Grande do Norte'),
+    ('RS', 'Rio Grande do Sul'),
+    ('RO', 'Rondônia'),
+    ('RR', 'Roraima'),
+    ('SC', 'Santa Catarina'),
+    ('SP', 'São Paulo'),
+    ('SE', 'Sergipe'),
+    ('TO', 'Tocantins'),
+]
+
 
     # Dados pessoais
     nome_completo = models.CharField(max_length=150)
@@ -54,13 +84,16 @@ class Paciente(models.Model):
     email = models.EmailField(null=True, blank=True)
 
     # Endereço
-    cep = models.CharField(max_length=8)
+    cep = models.CharField(max_length=9)
     logradouro = models.CharField(max_length=150)
     numero = models.CharField(max_length=10)
     complemento = models.CharField(max_length=100, null=True, blank=True)
     bairro = models.CharField(max_length=100)
     cidade = models.CharField(max_length=100)
-    estado = models.CharField(max_length=2)
+    estado = models.CharField(
+    max_length=2,
+    choices=UF_CHOICES
+)
 
     # Controle
     ativo = models.BooleanField(default=True)
@@ -69,3 +102,5 @@ class Paciente(models.Model):
 
     def __str__(self):
         return f"{self.nome_completo} - CNS {self.cns}"
+
+

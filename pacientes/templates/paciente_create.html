@@ -3,11 +3,16 @@
 {% block content %}
 <div class="container mt-4">
 
-  <h3 class="mb-4">Cadastrar Paciente</h3>
+  <center><h3 class="mb-4">Cadastrar Paciente</h3></center>
 
   <div class="card">
     <div class="card-body">
-
+      {% if form.errors %}
+      <div class="alert alert-danger">
+        <strong>Erro ao salvar:</strong>
+        {{ form.errors }}
+      </div>
+      {% endif %}
       <form method="post">
         {% csrf_token %}
 
@@ -138,4 +143,67 @@
   </div>
 
 </div>
+
+<script>
+const cpf = document.getElementById("id_cpf");
+
+if (cpf) {
+  cpf.addEventListener("input", function () {
+    let v = this.value.replace(/\D/g, "").slice(0, 11);
+
+    v = v.replace(/(\d{3})(\d)/, "$1.$2");
+    v = v.replace(/(\d{3})(\d)/, "$1.$2");
+    v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
+    this.value = v;
+  });
+}
+</script>
+
+<script>
+const cns = document.getElementById("id_cns");
+
+if (cns) {
+  cns.addEventListener("input", function () {
+    let v = this.value.replace(/\D/g, "").slice(0, 15);
+
+    v = v.replace(/(\d{3})(\d)/, "$1 $2");
+    v = v.replace(/(\d{4})(\d)/, "$1 $2");
+    v = v.replace(/(\d{4})(\d)/, "$1 $2");
+
+    this.value = v;
+  });
+}
+</script>
+
+<script>
+const telefone = document.getElementById("id_telefone");
+
+if (telefone) {
+  telefone.addEventListener("input", function () {
+    let v = this.value.replace(/\D/g, "").slice(0, 11);
+
+    v = v.replace(/^(\d{2})(\d)/, "($1) $2");
+    v = v.replace(/(\d{5})(\d{4})$/, "$1-$2");
+
+    this.value = v;
+  });
+}
+</script>
+
+
+<script>
+const cep = document.getElementById("id_cep");
+
+if (cep) {
+  cep.addEventListener("input", function () {
+    let v = this.value.replace(/\D/g, "").slice(0, 8);
+
+    v = v.replace(/(\d{5})(\d)/, "$1-$2");
+
+    this.value = v;
+  });
+}
+</script>
+
 {% endblock %}
