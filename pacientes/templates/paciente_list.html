@@ -7,28 +7,31 @@ HMDAG - Pacientes
 {% block content %}
 
 <!-- Botao de busca-->
+<!-- Botão de busca -->
 <div class="row mb-3">
     <div class="col-md-6">
         <form method="get" action="{% url 'pacientes:list' %}">
-
             <div class="input-group">
-                <input type="text" class="form-control" name="nome_completo" placeholder="Nome Completo"
-                    value="{{request.GET.nome_completo}}">
+                <input type="text" class="form-control" name="nome_completo" placeholder="Nome completo"
+                    value="{{ request.GET.nome_completo }}">
+
+                <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF"
+                    value="{{ request.GET.cpf }}">
+
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-search"></i>
                 </button>
-
             </div>
-
         </form>
-
     </div>
+
     <div class="col-md-6">
-        <a href="{% url 'pacientes:create' %}" class=" btn btn-success float-end">
-            <i class="bi bi-plus"></i> Nova Marca
+        <a href="{% url 'pacientes:create' %}" class="btn btn-success float-end">
+            <i class="bi bi-plus"></i> Novo Paciente
         </a>
     </div>
 </div>
+
 
 <!-- Tabelas de Informações -->
 <div class="table-responsive">
@@ -74,5 +77,24 @@ HMDAG - Pacientes
     </table>
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const cpfInput = document.getElementById('cpf');
+
+    cpfInput.addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, '');
+
+        if (value.length > 11) {
+            value = value.slice(0, 11);
+        }
+
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+
+        e.target.value = value;
+    });
+});
+</script>
 
 {% endblock %}

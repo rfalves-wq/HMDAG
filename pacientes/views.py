@@ -12,9 +12,12 @@ class PacienteListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         nome_completo = self.request.GET.get('nome_completo')
+        cpf = self.request.GET.get('cpf')
 
         if nome_completo:
             queryset = queryset.filter(nome_completo__icontains=nome_completo)
+        if cpf:
+            queryset = queryset.filter(cpf__icontains=cpf)
 
         return queryset
     
