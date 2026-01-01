@@ -25,18 +25,24 @@ class Enfermeiro(models.Model):
         ('SP', 'São Paulo'), ('SE', 'Sergipe'), ('TO', 'Tocantins'),
     ]
 
-    # Identificação SUS
+     # Identificação SUS
     cns = models.CharField(
-        max_length=15,
+        max_length=18,
         unique=True,
-        verbose_name="Cartão Nacional de Saúde (CNS)"
+        verbose_name="Cartão Nacional de Saúde (CNS)",
+        error_messages={
+            'unique': 'Já existe um paciente cadastrado com este CNS.'
+        }
     )
 
     cpf = models.CharField(
-        max_length=11,
+        max_length=14,
         unique=True,
-        verbose_name="CPF"
-    )
+        null=True,
+        blank=True,
+        error_messages={
+            'unique': 'Já existe um paciente cadastrado com este CPF.'
+        })
 
     # Dados pessoais
     nome_completo = models.CharField(max_length=150)
