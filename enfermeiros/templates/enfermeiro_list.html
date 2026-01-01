@@ -50,19 +50,21 @@ HMDAG - Enfermeiro
                 <td>{{ enfermeiro.id }}</td>
                 <td>{{ enfermeiro.nome_completo }}</td>
                 <td>{{ enfermeiro.cpf }}</td>
-                
+
                 <td class="text-center">
 
-                    <a href="{% url 'enfermeiros:detail' enfermeiro.id %}" class="btn btn-sm btn-info" title="Visualizar">
+                    <a href="{% url 'enfermeiros:detail' enfermeiro.id %}" class="btn btn-sm btn-info"
+                        title="Visualizar">
                         <i class="bi bi-eye"></i>
                     </a>
 
-                    <a href="{% url 'enfermeiros:update' enfermeiro.id %}" class="btn btn-sm btn-warning" title="Editar">
+                    <a href="{% url 'enfermeiros:update' enfermeiro.id %}" class="btn btn-sm btn-warning"
+                        title="Editar">
                         <i class="bi bi-pencil"></i>
                     </a>
 
-                    <a href="#" class="btn btn-sm btn-danger" title="Excluir">
-                        <i class="bi bi-trash"></i>
+                    <a href="{% url 'enfermeiros:delete' enfermeiro.id %}" class="btn btn-outline-danger btn-sm">
+                        Excluir
                     </a>
 
                 </td>
@@ -79,23 +81,23 @@ HMDAG - Enfermeiro
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const cpfInput = document.getElementById('cpf');
+    document.addEventListener('DOMContentLoaded', function () {
+        const cpfInput = document.getElementById('cpf');
 
-    cpfInput.addEventListener('input', function (e) {
-        let value = e.target.value.replace(/\D/g, '');
+        cpfInput.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
 
-        if (value.length > 11) {
-            value = value.slice(0, 11);
-        }
+            if (value.length > 11) {
+                value = value.slice(0, 11);
+            }
 
-        value = value.replace(/(\d{3})(\d)/, '$1.$2');
-        value = value.replace(/(\d{3})(\d)/, '$1.$2');
-        value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
 
-        e.target.value = value;
+            e.target.value = value;
+        });
     });
-});
 </script>
 
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-HMDAG - Pacientes
+HMDAG - Enfermeiro
 {% endblock %}
 
 {% block content %}
@@ -10,7 +10,7 @@ HMDAG - Pacientes
 <!-- Botão de busca -->
 <div class="row mb-3">
     <div class="col-md-6">
-        <form method="get" action="{% url 'pacientes:list' %}">
+        <form method="get" action="{% url 'enfermeiros:list' %}">
             <div class="input-group">
                 <input type="text" class="form-control" name="nome_completo" placeholder="Nome completo"
                     value="{{ request.GET.nome_completo }}">
@@ -26,8 +26,8 @@ HMDAG - Pacientes
     </div>
 
     <div class="col-md-6">
-        <a href="{% url 'pacientes:create' %}" class="btn btn-success float-end">
-            <i class="bi bi-plus"></i> Novo Paciente
+        <a href="{% url 'enfermeiros:create' %}" class="btn btn-success float-end">
+            <i class="bi bi-plus"></i> Novo Enfermeiro
         </a>
     </div>
 </div>
@@ -45,22 +45,23 @@ HMDAG - Pacientes
             </tr>
         </thead>
         <tbody>
-            {% for paciente in pacientes %}
+            {% for enfermeiro in enfermeiros %}
             <tr>
-                <td>{{ paciente.id }}</td>
-                <td>{{ paciente.nome_completo }}</td>
-                <td>{{ paciente.cpf }}</td>
+                <td>{{ enfermeiro.id }}</td>
+                <td>{{ enfermeiro.nome_completo }}</td>
+                <td>{{ enfermeiro.cpf }}</td>
+                
                 <td class="text-center">
 
-                    <a href="{% url 'pacientes:detail' paciente.id %}" class="btn btn-sm btn-info" title="Visualizar">
+                    <a href="{% url 'enfermeiros:detail' enfermeiro.id %}" class="btn btn-sm btn-info" title="Visualizar">
                         <i class="bi bi-eye"></i>
                     </a>
 
-                    <a href="{% url 'pacientes:update' paciente.id %}" class="btn btn-sm btn-warning" title="Editar">
+                    <a href="{% url 'enfermeiros:update' enfermeiro.id %}" class="btn btn-sm btn-warning" title="Editar">
                         <i class="bi bi-pencil"></i>
                     </a>
 
-                    <a href="{% url 'pacientes:paciente_delete' paciente.id %}" class="btn btn-sm btn-danger" title="Excluir">
+                    <a href="#" class="btn btn-sm btn-danger" title="Excluir">
                         <i class="bi bi-trash"></i>
                     </a>
 
@@ -69,7 +70,7 @@ HMDAG - Pacientes
             {% empty %}
             <tr>
                 <td colspan="3" class="text-center text-muted py-4">
-                    Nenhum paciente encontrado.
+                    Nenhum enfermeiro encontrado.
                 </td>
             </tr>
             {% endfor %}

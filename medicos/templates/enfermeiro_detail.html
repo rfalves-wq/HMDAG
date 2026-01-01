@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+
+  <!-- CABEÇALHO -->
+  <div class="card mb-3 shadow-sm">
+    <div class="card-body py-3 d-flex justify-content-between align-items-center">
+
+      <div>
+        <h4 class="mb-1 fw-semibold">{{ object.nome_completo }}</h4>
+        <small class="text-muted">
+          CNS: {{ object.cns }} |
+          CPF: {{ object.cpf }}
+        </small>
+      </div>
+
+      {% if object.ativo %}
+        <span class="badge bg-success fs-6">Ativo</span>
+      {% else %}
+        <span class="badge bg-danger fs-6">Inativo</span>
+      {% endif %}
+
+    </div>
+  </div>
+
+  <!-- DADOS PROFISSIONAIS -->
+  <div class="card shadow-sm">
+    <div class="card-body">
+
+      <table class="table table-sm table-bordered">
+        <tbody>
+          <tr>
+            <th style="width: 25%">Nascimento</th>
+            <td>{{ object.data_nascimento|date:"d/m/Y" }}</td>
+          </tr>
+          <tr>
+            <th>Sexo</th>
+            <td>{{ object.get_sexo_display }}</td>
+          </tr>
+          <tr>
+            <th>COREN</th>
+            <td>{{ object.coren }}/{{ object.coren_uf }}</td>
+          </tr>
+          <tr>
+            <th>Categoria</th>
+            <td>{{ object.get_categoria_display }}</td>
+          </tr>
+          <tr>
+            <th>CBO</th>
+            <td>{{ object.cbo }}</td>
+          </tr>
+          <tr>
+            <th>CNES</th>
+            <td>{{ object.cnes }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- CONTATO -->
+      <h6 class="text-secondary mt-4">Contato</h6>
+      <table class="table table-sm table-bordered">
+        <tbody>
+          <tr>
+            <th style="width: 25%">Telefone</th>
+            <td>{{ object.telefone|default:"—" }}</td>
+          </tr>
+          <tr>
+            <th>E-mail</th>
+            <td>{{ object.email|default:"—" }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <!-- AÇÕES -->
+  <div class="mt-4 d-flex gap-2">
+    <a href="{% url 'enfermeiros:list' %}" class="btn btn-outline-secondary">
+      Voltar
+    </a>
+
+    <a href="{% url 'enfermeiros:update' object.pk %}"
+       class="btn btn-outline-warning">
+      Editar Cadastro
+    </a>
+  </div>
+
+</div>
+{% endblock %}
