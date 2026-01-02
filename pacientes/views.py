@@ -4,10 +4,12 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView,UpdateView,DeleteView
 
 from  . import models, forms
+
 class PacienteListView(ListView):
     model = models.Paciente
     template_name = 'paciente_list.html'
     context_object_name = 'pacientes'
+    paginate_by = 10
 
     def get_queryset(self):
         queryset = super().get_queryset()
