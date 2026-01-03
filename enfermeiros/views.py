@@ -12,6 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Enfermeiro
 from .forms import EnfermeiroForm
+
 class EnfermeiroListView(LoginRequiredMixin, ListView):
     model = Enfermeiro
     template_name = 'enfermeiro_list.html'
@@ -20,20 +21,24 @@ class EnfermeiroListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Enfermeiro.objects.filter(ativo=True).order_by('nome_completo')
+
 class EnfermeiroCreateView(LoginRequiredMixin, CreateView):
     model = Enfermeiro
     form_class = EnfermeiroForm
     template_name = 'enfermeiro_form.html'
     success_url = reverse_lazy('enfermeiro_list')
+
 class EnfermeiroUpdateView(LoginRequiredMixin, UpdateView):
     model = Enfermeiro
     form_class = EnfermeiroForm
     template_name = 'enfermeiro_form.html'
     success_url = reverse_lazy('enfermeiro_list')
+
 class EnfermeiroDetailView(LoginRequiredMixin, DetailView):
     model = Enfermeiro
     template_name = 'enfermeiro_detail.html'
     context_object_name = 'enfermeiro'
+
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 

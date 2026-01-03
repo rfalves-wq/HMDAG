@@ -7,6 +7,8 @@
 {% block content %}
 <div class="container mt-4">
 
+    
+
     <h3 class="mb-4">
         {% if object %}
             Editar Enfermeiro
@@ -16,6 +18,28 @@
     </h3>
 
     <form method="post" novalidate>
+
+     {% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Foram encontrados erros no formulário:</strong>
+        <ul class="mb-0">
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>
+                        <strong>{{ field.label }}:</strong> {{ error }}
+                    </li>
+                {% endfor %}
+            {% endfor %}
+
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+
+
         {% csrf_token %}
 
         <ul class="nav nav-tabs" id="enfermeiroTabs" role="tablist">
@@ -165,4 +189,39 @@
     </form>
 
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const hasErrors = document.querySelector(".alert-danger");
+    if (!hasErrors) return;
+
+    // mapeamento campo → aba
+    const fieldTabMap = {
+        "id_cns": "identificacao",
+        "id_cpf": "identificacao",
+        "id_data_nascimento": "identificacao",
+        "id_nome_completo": "identificacao",
+        "id_telefone": "contato",
+        "id_email": "contato",
+        "id_cep": "endereco",
+        "id_logradouro": "endereco",
+        "id_coren": "profissional",
+        "id_estabelecimento_cnes": "profissional"
+    };
+
+    for (const fieldId in fieldTabMap) {
+        if (document.getElementById(fieldId)?.classList.contains("is-invalid")) {
+            const tabId = fieldTabMap[fieldId];
+
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('show', 'active'));
+
+            document.querySelector(`[data-bs-target="#${tabId}"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('show', 'active');
+            break;
+        }
+    }
+});
+</script>
+
 {% endblock %}
