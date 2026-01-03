@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if object %}Editar Enfermeiro{% else %}Novo Enfermeiro{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h3 class="mb-4">
+        {% if object %}
+            Editar Enfermeiro
+        {% else %}
+            Cadastrar Enfermeiro
+        {% endif %}
+    </h3>
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        <ul class="nav nav-tabs" id="enfermeiroTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" data-bs-toggle="tab"
+                        data-bs-target="#identificacao" type="button">
+                    Identificação
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab"
+                        data-bs-target="#contato" type="button">
+                    Contato
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab"
+                        data-bs-target="#endereco" type="button">
+                    Endereço
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab"
+                        data-bs-target="#profissional" type="button">
+                    Profissional
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content border border-top-0 p-4">
+
+            <!-- IDENTIFICAÇÃO -->
+            <div class="tab-pane fade show active" id="identificacao">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        {{ form.cns.label_tag }} {{ form.cns }}
+                        {{ form.cns.errors }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        {{ form.cpf.label_tag }} {{ form.cpf }}
+                        {{ form.cpf.errors }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        {{ form.data_nascimento.label_tag }} {{ form.data_nascimento }}
+                        {{ form.data_nascimento.errors }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        {{ form.nome_completo.label_tag }} {{ form.nome_completo }}
+                        {{ form.nome_completo.errors }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.nome_social.label_tag }} {{ form.nome_social }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        {{ form.sexo.label_tag }} {{ form.sexo }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        {{ form.nome_mae.label_tag }} {{ form.nome_mae }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        {{ form.nome_pai.label_tag }} {{ form.nome_pai }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTATO -->
+            <div class="tab-pane fade" id="contato">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        {{ form.telefone.label_tag }} {{ form.telefone }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.email.label_tag }} {{ form.email }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- ENDEREÇO -->
+            <div class="tab-pane fade" id="endereco">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        {{ form.cep.label_tag }} {{ form.cep }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {{ form.logradouro.label_tag }} {{ form.logradouro }}
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        {{ form.numero.label_tag }} {{ form.numero }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        {{ form.complemento.label_tag }} {{ form.complemento }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        {{ form.bairro.label_tag }} {{ form.bairro }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        {{ form.municipio.label_tag }} {{ form.municipio }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2 mb-3">
+                        {{ form.uf.label_tag }} {{ form.uf }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROFISSIONAL -->
+            <div class="tab-pane fade" id="profissional">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        {{ form.coren.label_tag }} {{ form.coren }}
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        {{ form.uf_coren.label_tag }} {{ form.uf_coren }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        {{ form.estabelecimento_cnes.label_tag }}
+                        {{ form.estabelecimento_cnes }}
+                    </div>
+                    <div class="col-md-2 mb-3 form-check mt-4">
+                        {{ form.ativo }} {{ form.ativo.label_tag }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-4 d-flex justify-content-between">
+            <a href="{% url 'enfermeiro_list' %}" class="btn btn-secondary">
+                Voltar
+            </a>
+            <button type="submit" class="btn btn-success">
+                Salvar
+            </button>
+        </div>
+
+    </form>
+
+</div>
+{% endblock %}

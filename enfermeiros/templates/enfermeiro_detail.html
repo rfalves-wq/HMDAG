@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}
+Detalhes do Enfermeiro
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Detalhes do Enfermeiro</h3>
+        <div>
+            <a href="{% url 'enfermeiro_update' enfermeiro.pk %}"
+               class="btn btn-warning">
+                Editar
+            </a>
+            <a href="{% url 'enfermeiro_list' %}"
+               class="btn btn-secondary">
+                Voltar
+            </a>
+        </div>
+    </div>
+
+    <!-- IDENTIFICAÇÃO -->
+    <div class="card mb-3">
+        <div class="card-header">
+            Identificação SUS
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4"><strong>Nome Completo:</strong><br>{{ enfermeiro.nome_completo }}</div>
+                <div class="col-md-4"><strong>Nome Social:</strong><br>{{ enfermeiro.nome_social|default:"—" }}</div>
+                <div class="col-md-4"><strong>Sexo:</strong><br>{{ enfermeiro.get_sexo_display }}</div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-md-3"><strong>CNS:</strong><br>{{ enfermeiro.cns }}</div>
+                <div class="col-md-3"><strong>CPF:</strong><br>{{ enfermeiro.cpf }}</div>
+                <div class="col-md-3"><strong>Data de Nascimento:</strong><br>{{ enfermeiro.data_nascimento|date:"d/m/Y" }}</div>
+                <div class="col-md-3"><strong>Nome da Mãe:</strong><br>{{ enfermeiro.nome_mae }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTATO -->
+    <div class="card mb-3">
+        <div class="card-header">
+            Contato
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6"><strong>Telefone:</strong><br>{{ enfermeiro.telefone }}</div>
+                <div class="col-md-6"><strong>E-mail:</strong><br>{{ enfermeiro.email|default:"—" }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ENDEREÇO -->
+    <div class="card mb-3">
+        <div class="card-header">
+            Endereço
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4"><strong>Logradouro:</strong><br>{{ enfermeiro.logradouro }}, {{ enfermeiro.numero }}</div>
+                <div class="col-md-4"><strong>Bairro:</strong><br>{{ enfermeiro.bairro }}</div>
+                <div class="col-md-4"><strong>Município / UF:</strong><br>{{ enfermeiro.municipio }} - {{ enfermeiro.uf }}</div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-md-3"><strong>CEP:</strong><br>{{ enfermeiro.cep }}</div>
+                <div class="col-md-9"><strong>Complemento:</strong><br>{{ enfermeiro.complemento|default:"—" }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DADOS PROFISSIONAIS -->
+    <div class="card mb-3">
+        <div class="card-header">
+            Dados Profissionais
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4"><strong>COREN:</strong><br>{{ enfermeiro.coren }}</div>
+                <div class="col-md-2"><strong>UF COREN:</strong><br>{{ enfermeiro.uf_coren }}</div>
+                <div class="col-md-4"><strong>CNES:</strong><br>{{ enfermeiro.estabelecimento_cnes }}</div>
+                <div class="col-md-2">
+                    <strong>Status:</strong><br>
+                    {% if enfermeiro.ativo %}
+                        <span class="badge bg-success">Ativo</span>
+                    {% else %}
+                        <span class="badge bg-danger">Inativo</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTROLE -->
+    <div class="card mb-3">
+        <div class="card-header">
+            Controle do Sistema
+        </div>
+        <div class="card-body">
+            <strong>Data de Cadastro:</strong>
+            {{ enfermeiro.data_cadastro|date:"d/m/Y H:i" }}
+        </div>
+    </div>
+
+</div>
+{% endblock %}
