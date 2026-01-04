@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ titulo }}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <div class="card">
+        <div class="card-header">
+            <h4 class="mb-0">{{ titulo }}</h4>
+        </div>
+
+        <div class="card-body">
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <!-- ERROS GERAIS DO FORMULÁRIO -->
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <strong>Corrija os erros abaixo:</strong>
+
+                        {% if form.non_field_errors %}
+                            <ul class="mb-2">
+                                {% for error in form.non_field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                <!-- IDENTIFICAÇÃO -->
+                <h5 class="mb-3">Identificação</h5>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        {{ form.cns.label_tag }}
+                        {{ form.cns }}
+                        {% for error in form.cns.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        {{ form.cpf.label_tag }}
+                        {{ form.cpf }}
+                        {% for error in form.cpf.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        {{ form.sexo.label_tag }}
+                        {{ form.sexo }}
+                        {% for error in form.sexo.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        {{ form.nome_completo.label_tag }}
+                        {{ form.nome_completo }}
+                        {% for error in form.nome_completo.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        {{ form.nome_social.label_tag }}
+                        {{ form.nome_social }}
+                        {% for error in form.nome_social.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        {{ form.data_nascimento.label_tag }}
+                        {{ form.data_nascimento }}
+                        {% for error in form.data_nascimento.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- DADOS PROFISSIONAIS -->
+                <h5 class="mb-3">Dados Profissionais</h5>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        {{ form.crm.label_tag }}
+                        {{ form.crm }}
+                        {% for error in form.crm.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        {{ form.uf_crm.label_tag }}
+                        {{ form.uf_crm }}
+                        {% for error in form.uf_crm.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        {{ form.especialidade.label_tag }}
+                        {{ form.especialidade }}
+                        {% for error in form.especialidade.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- CONTATO -->
+                <h5 class="mb-3">Contato</h5>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        {{ form.telefone.label_tag }}
+                        {{ form.telefone }}
+                        {% for error in form.telefone.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-8 mb-3">
+                        {{ form.email.label_tag }}
+                        {{ form.email }}
+                        {% for error in form.email.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- ENDEREÇO -->
+                <h5 class="mb-3">Endereço</h5>
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        {{ form.cep.label_tag }}
+                        {{ form.cep }}
+                        {% for error in form.cep.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-7 mb-3">
+                        {{ form.logradouro.label_tag }}
+                        {{ form.logradouro }}
+                        {% for error in form.logradouro.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        {{ form.numero.label_tag }}
+                        {{ form.numero }}
+                        {% for error in form.numero.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        {{ form.complemento.label_tag }}
+                        {{ form.complemento }}
+                        {% for error in form.complemento.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        {{ form.bairro.label_tag }}
+                        {{ form.bairro }}
+                        {% for error in form.bairro.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        {{ form.municipio.label_tag }}
+                        {{ form.municipio }}
+                        {% for error in form.municipio.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-1 mb-3">
+                        {{ form.uf.label_tag }}
+                        {{ form.uf }}
+                        {% for error in form.uf.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- CONTROLE -->
+                <div class="form-check mb-4">
+                    {{ form.ativo }}
+                    {{ form.ativo.label_tag }}
+                    {% for error in form.ativo.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <!-- BOTÕES -->
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'medico_list' %}" class="btn btn-secondary">
+                        Voltar
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        Salvar
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
