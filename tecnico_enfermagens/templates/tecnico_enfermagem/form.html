@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if object %}
+Editar Técnico de Enfermagem
+{% else %}
+Novo Técnico de Enfermagem
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+
+    <h3 class="mb-4">
+        {% if object %}
+            Editar Técnico de Enfermagem
+        {% else %}
+            Novo Técnico de Enfermagem
+        {% endif %}
+    </h3>
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        <!-- Abas -->
+        <ul class="nav nav-tabs mb-3" id="tecnicoTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#identificacao" type="button">
+                    Identificação
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#contato" type="button">
+                    Contato
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#endereco" type="button">
+                    Endereço
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profissional" type="button">
+                    Dados Profissionais
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+
+            <!-- Identificação -->
+            <div class="tab-pane fade show active" id="identificacao">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        {{ form.nome_completo.label_tag }}
+                        {{ form.nome_completo }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.nome_social.label_tag }}
+                        {{ form.nome_social }}
+                    </div>
+
+                    <div class="col-md-4">
+                        {{ form.cpf.label_tag }}
+                        {{ form.cpf }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.cns.label_tag }}
+                        {{ form.cns }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.data_nascimento.label_tag }}
+                        {{ form.data_nascimento }}
+                    </div>
+
+                    <div class="col-md-4">
+                        {{ form.sexo.label_tag }}
+                        {{ form.sexo }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.estado_civil.label_tag }}
+                        {{ form.estado_civil }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form.nome_mae.label_tag }}
+                        {{ form.nome_mae }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.nome_pai.label_tag }}
+                        {{ form.nome_pai }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contato -->
+            <div class="tab-pane fade" id="contato">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        {{ form.telefone.label_tag }}
+                        {{ form.telefone }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.email.label_tag }}
+                        {{ form.email }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Endereço -->
+            <div class="tab-pane fade" id="endereco">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        {{ form.cep.label_tag }}
+                        {{ form.cep }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.logradouro.label_tag }}
+                        {{ form.logradouro }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form.numero.label_tag }}
+                        {{ form.numero }}
+                    </div>
+
+                    <div class="col-md-4">
+                        {{ form.complemento.label_tag }}
+                        {{ form.complemento }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.bairro.label_tag }}
+                        {{ form.bairro }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form.municipio.label_tag }}
+                        {{ form.municipio }}
+                    </div>
+                    <div class="col-md-1">
+                        {{ form.uf.label_tag }}
+                        {{ form.uf }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dados Profissionais -->
+            <div class="tab-pane fade" id="profissional">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        {{ form.coren.label_tag }}
+                        {{ form.coren }}
+                    </div>
+                    <div class="col-md-2">
+                        {{ form.coren_uf.label_tag }}
+                        {{ form.coren_uf }}
+                    </div>
+                    <div class="col-md-2 d-flex align-items-center mt-4">
+                        <div class="form-check">
+                            {{ form.ativo }}
+                            {{ form.ativo.label_tag }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+     {% if form.errors %}
+<div class="alert alert-danger">
+    <ul class="mb-0">
+        {% for field in form %}
+            {% for error in field.errors %}
+                <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+
+        <!-- Botões -->
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">
+                Salvar
+            </button>
+            <a href="{% url 'tecnico_enfermagem_list' %}" class="btn btn-secondary">
+                Voltar
+            </a>
+        </div>
+
+    </form>
+
+</div>
+{% endblock %}

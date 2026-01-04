@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pacientes',
      'enfermeiros',
+     'tecnico_enfermagens',
     
 ]
 

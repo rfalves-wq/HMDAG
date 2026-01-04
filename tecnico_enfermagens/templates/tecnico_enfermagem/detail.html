@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}
+Detalhes do Técnico de Enfermagem
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+
+    <!-- Cabeçalho -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Detalhes do Técnico de Enfermagem</h3>
+        <div>
+            <a href="{% url 'tecnico_enfermagem_update' tecnico.id %}" class="btn btn-warning">
+                Editar
+            </a>
+            <a href="{% url 'tecnico_enfermagem_list' %}" class="btn btn-secondary">
+                Voltar
+            </a>
+        </div>
+    </div>
+
+    <!-- Identificação -->
+    <div class="card mb-3">
+        <div class="card-header bg-dark text-white">
+            Identificação
+        </div>
+        <div class="card-body">
+            <div class="row mb-2">
+                <div class="col-md-6"><strong>Nome Completo:</strong> {{ tecnico.nome_completo }}</div>
+                <div class="col-md-6"><strong>Nome Social:</strong> {{ tecnico.nome_social|default:"—" }}</div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-md-4"><strong>CPF:</strong> {{ tecnico.cpf }}</div>
+                <div class="col-md-4"><strong>CNS:</strong> {{ tecnico.cns }}</div>
+                <div class="col-md-4"><strong>Data de Nascimento:</strong> {{ tecnico.data_nascimento|date:"d/m/Y" }}</div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-md-4"><strong>Sexo:</strong> {{ tecnico.get_sexo_display }}</div>
+                <div class="col-md-4"><strong>Estado Civil:</strong> {{ tecnico.get_estado_civil_display }}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6"><strong>Nome da Mãe:</strong> {{ tecnico.nome_mae }}</div>
+                <div class="col-md-6"><strong>Nome do Pai:</strong> {{ tecnico.nome_pai|default:"—" }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contato -->
+    <div class="card mb-3">
+        <div class="card-header bg-dark text-white">
+            Contato
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4"><strong>Telefone:</strong> {{ tecnico.telefone }}</div>
+                <div class="col-md-6"><strong>Email:</strong> {{ tecnico.email|default:"—" }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Endereço -->
+    <div class="card mb-3">
+        <div class="card-header bg-dark text-white">
+            Endereço
+        </div>
+        <div class="card-body">
+            <div class="row mb-2">
+                <div class="col-md-3"><strong>CEP:</strong> {{ tecnico.cep }}</div>
+                <div class="col-md-6"><strong>Logradouro:</strong> {{ tecnico.logradouro }}</div>
+                <div class="col-md-3"><strong>Número:</strong> {{ tecnico.numero }}</div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-md-4"><strong>Complemento:</strong> {{ tecnico.complemento|default:"—" }}</div>
+                <div class="col-md-4"><strong>Bairro:</strong> {{ tecnico.bairro }}</div>
+                <div class="col-md-4"><strong>Município:</strong> {{ tecnico.municipio }}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2"><strong>UF:</strong> {{ tecnico.uf }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dados Profissionais -->
+    <div class="card mb-3">
+        <div class="card-header bg-dark text-white">
+            Dados Profissionais
+        </div>
+        <div class="card-body">
+            <div class="row mb-2">
+                <div class="col-md-4"><strong>COREN:</strong> {{ tecnico.coren }}</div>
+                <div class="col-md-2"><strong>UF COREN:</strong> {{ tecnico.coren_uf }}</div>
+                <div class="col-md-2">
+                    <strong>Status:</strong>
+                    {% if tecnico.ativo %}
+                        <span class="badge bg-success">Ativo</span>
+                    {% else %}
+                        <span class="badge bg-danger">Inativo</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auditoria -->
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white">
+            Auditoria
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4"><strong>Cadastrado em:</strong> {{ tecnico.data_cadastro|date:"d/m/Y H:i" }}</div>
+                <div class="col-md-4"><strong>Última atualização:</strong> {{ tecnico.data_atualizacao|date:"d/m/Y H:i" }}</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
