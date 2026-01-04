@@ -20,7 +20,20 @@ class EnfermeiroListView(LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Enfermeiro.objects.filter(ativo=True).order_by('nome_completo')
+        queryset = Enfermeiro.objects.filter(ativo=True).order_by('nome_completo')
+
+        nome_completo = self.request.GET.get('nome_completo')
+        
+
+        if nome_completo:
+            queryset = queryset.filter(
+                nome_completo__icontains=nome_completo
+            )
+
+       
+
+        return queryset
+
 
 class EnfermeiroCreateView(LoginRequiredMixin, CreateView):
     model = Enfermeiro

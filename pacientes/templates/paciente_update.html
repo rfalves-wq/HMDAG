@@ -2,7 +2,11 @@
 
 {% block content %}
 <div class="container mt-4">
-
+{% if form.errors %}
+  <div class="alert alert-danger">
+    <pre>{{ form.errors }}</pre>
+  </div>
+{% endif %}
   <!-- CABEÇALHO -->
   <div class="card mb-3 shadow-sm">
     <div class="card-body py-3">
