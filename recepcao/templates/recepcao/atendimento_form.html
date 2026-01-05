@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h4>Novo Atendimento – Recepção</h4>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button class="btn btn-primary">
+      Abrir Atendimento
+    </button>
+  </form>
+</div>
+{% endblock %}

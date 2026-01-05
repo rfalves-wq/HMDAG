@@ -41,6 +41,7 @@ INSTALLED_APPS = [
      'enfermeiros',
      'tecnico_enfermagens',
      'medicos',
+     'recepcao',
     
 ]
 
