@@ -1,6 +1,5 @@
 from django import forms
 from .models import Triagem
-
 class TriagemForm(forms.ModelForm):
     class Meta:
         model = Triagem
@@ -12,6 +11,7 @@ class TriagemForm(forms.ModelForm):
             'saturacao_oxigenio',
             'queixa_principal',
             'observacoes',
+            'prioridade',  # campo para escolher prioridade
         ]
         widgets = {
             'queixa_principal': forms.Textarea(attrs={'rows': 3}),

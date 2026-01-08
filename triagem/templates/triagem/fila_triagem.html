@@ -7,24 +7,41 @@
             <th>Paciente</th>
             <th>Data/Hora</th>
             <th>Status</th>
+            <th>Prioridade</th>
+            <th>Enfermeiro</th>
             <th>Ação</th>
         </tr>
     </thead>
     <tbody>
         {% for t in triagens %}
-        <tr>
+        <tr 
+            {% if t.prioridade == 'vermelho' %} style="background-color:#f8d7da;" {% endif %}
+            {% if t.prioridade == 'amarelo' %} style="background-color:#fff3cd;" {% endif %}
+            {% if t.prioridade == 'verde' %} style="background-color:#d4edda;" {% endif %}
+            {% if t.prioridade == 'azul' %} style="background-color:#d1ecf1;" {% endif %}
+        >
             <td>{{ t.paciente.nome_completo }}</td>
             <td>{{ t.data_hora }}</td>
             <td>{{ t.get_status_display }}</td>
+            <td>{{ t.get_prioridade_display }}</td>
+            <td>
+                {% if t.enfermeiro %}
+                    {{ t.enfermeiro.user.get_full_name }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
             <td>
                 <a href="{% url 'triagem_atender' t.id %}" class="btn btn-primary btn-sm">Atender</a>
             </td>
         </tr>
         {% empty %}
         <tr>
-            <td colspan="4">Nenhum paciente na fila.</td>
+            <td colspan="6">Nenhum paciente na fila.</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+
+
 {% endblock %}
