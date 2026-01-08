@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Atender Triagem: {{ triagem.paciente.nome_completo }}</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Finalizar Triagem</button>
+</form>
+{% endblock %}

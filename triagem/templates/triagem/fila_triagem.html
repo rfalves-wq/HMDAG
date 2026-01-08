@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Fila de Triagem</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Paciente</th>
+            <th>Data/Hora</th>
+            <th>Status</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for t in triagens %}
+        <tr>
+            <td>{{ t.paciente.nome_completo }}</td>
+            <td>{{ t.data_hora }}</td>
+            <td>{{ t.get_status_display }}</td>
+            <td>
+                <a href="{% url 'triagem_atender' t.id %}" class="btn btn-primary btn-sm">Atender</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Nenhum paciente na fila.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

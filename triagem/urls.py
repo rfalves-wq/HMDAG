@@ -1,11 +1,11 @@
 from django.urls import path
+from django.views.generic import RedirectView
 from . import views
 
 urlpatterns = [
-    path('triagem/', views.fila_triagem, name='fila_triagem'),
-    path('triagem/iniciar/<int:atendimento_id>/', views.iniciar_triagem, name='iniciar_triagem'),
-    path('triagem/concluir/<int:atendimento_id>/', views.concluir_triagem, name='concluir_triagem'),
+    # Redireciona /triagem/ para /triagem/fila/
+    path('', RedirectView.as_view(pattern_name='fila_triagem', permanent=False)),
+    
+    path('fila/', views.fila_triagem, name='fila_triagem'),
+    path('atender/<int:triagem_id>/', views.triagem_atender, name='triagem_atender'),
 ]
-
-
-
