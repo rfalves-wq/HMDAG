@@ -6,3 +6,6 @@ urlpatterns = [
     path('triagem/iniciar/<int:atendimento_id>/', views.iniciar_triagem, name='iniciar_triagem'),
     path('triagem/concluir/<int:atendimento_id>/', views.concluir_triagem, name='concluir_triagem'),
 ]
+
+
+
