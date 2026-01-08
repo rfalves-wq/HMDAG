@@ -13,7 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Enfermeiro
 from .forms import EnfermeiroForm
 
-class EnfermeiroListView(LoginRequiredMixin, ListView):
+class EnfermeiroListView(ListView):
     model = Enfermeiro
     template_name = 'enfermeiro_list.html'
     context_object_name = 'enfermeiros'
@@ -35,19 +35,19 @@ class EnfermeiroListView(LoginRequiredMixin, ListView):
         return queryset
 
 
-class EnfermeiroCreateView(LoginRequiredMixin, CreateView):
+class EnfermeiroCreateView(CreateView):
     model = Enfermeiro
     form_class = EnfermeiroForm
     template_name = 'enfermeiro_form.html'
     success_url = reverse_lazy('enfermeiro_list')
 
-class EnfermeiroUpdateView(LoginRequiredMixin, UpdateView):
+class EnfermeiroUpdateView(UpdateView):
     model = Enfermeiro
     form_class = EnfermeiroForm
     template_name = 'enfermeiro_form.html'
     success_url = reverse_lazy('enfermeiro_list')
 
-class EnfermeiroDetailView(LoginRequiredMixin, DetailView):
+class EnfermeiroDetailView( DetailView):
     model = Enfermeiro
     template_name = 'enfermeiro_detail.html'
     context_object_name = 'enfermeiro'

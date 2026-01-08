@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}Triagem{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+  <h4 class="mb-3">
+    Triagem – {{ atendimento.paciente.nome_completo }}
+  </h4>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <!-- ABAS -->
+    <ul class="nav nav-tabs" id="triagemTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" data-bs-toggle="tab"
+                data-bs-target="#identificacao" type="button">
+          Identificação
+        </button>
+      </li>
+
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab"
+                data-bs-target="#sinais">
+          Sinais Vitais
+        </button>
+      </li>
+
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab"
+                data-bs-target="#avaliacao">
+          Avaliação
+        </button>
+      </li>
+
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" data-bs-toggle="tab"
+                data-bs-target="#classificacao">
+          Classificação
+        </button>
+      </li>
+    </ul>
+
+    <!-- CONTEÚDO DAS ABAS -->
+    <div class="tab-content border border-top-0 p-4">
+
+      <!-- IDENTIFICAÇÃO -->
+      <div class="tab-pane fade show active" id="identificacao">
+        <div class="mb-3">
+          <label class="form-label">Queixa Principal</label>
+          {{ form.queixa_principal }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Início dos Sintomas</label>
+          {{ form.inicio_sintomas }}
+        </div>
+      </div>
+
+      <!-- SINAIS VITAIS -->
+      <div class="tab-pane fade" id="sinais">
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Pressão Arterial</label>
+            {{ form.pressao_arterial }}
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Frequência Cardíaca</label>
+            {{ form.frequencia_cardiaca }}
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Frequência Respiratória</label>
+            {{ form.frequencia_respiratoria }}
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Temperatura (°C)</label>
+            {{ form.temperatura }}
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Saturação O₂ (%)</label>
+            {{ form.saturacao_oxigenio }}
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Dor (0–10)</label>
+            {{ form.dor }}
+          </div>
+        </div>
+      </div>
+
+      <!-- AVALIAÇÃO CLÍNICA -->
+      <div class="tab-pane fade" id="avaliacao">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Nível de Consciência</label>
+            {{ form.nivel_consciencia }}
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Mobilidade</label>
+            {{ form.mobilidade }}
+          </div>
+        </div>
+
+        <div class="form-check">
+          {{ form.sangramento }} <label class="form-check-label">Sangramento</label>
+        </div>
+
+        <div class="form-check">
+          {{ form.dispneia }} <label class="form-check-label">Dispneia</label>
+        </div>
+
+        <div class="form-check">
+          {{ form.dor_toracica }} <label class="form-check-label">Dor torácica</label>
+        </div>
+
+        <div class="form-check">
+          {{ form.nausea_vomito }} <label class="form-check-label">Náusea/Vômito</label>
+        </div>
+      </div>
+
+      <!-- CLASSIFICAÇÃO -->
+      <div class="tab-pane fade" id="classificacao">
+        <div class="mb-3">
+          <label class="form-label">Classificação de Risco</label>
+          {{ form.classificacao_risco }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Conduta / Encaminhamento</label>
+          {{ form.conduta }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Observações</label>
+          {{ form.observacoes }}
+        </div>
+      </div>
+
+    </div>
+
+    <!-- BOTÕES -->
+    <div class="mt-4 text-end">
+      <a href="{% url 'triagem:iniciar_triagem' atendimento.id %}">
+    Iniciar Triagem
+</a>
+
+      <button type="submit" class="btn btn-success">
+        Concluir Triagem
+      </button>
+    </div>
+
+  </form>
+
+</div>
+{% endblock %}

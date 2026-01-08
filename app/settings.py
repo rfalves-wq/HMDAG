@@ -42,6 +42,7 @@ INSTALLED_APPS = [
      'tecnico_enfermagens',
      'medicos',
      'recepcao',
+     'triagem',
     
 ]
 
