@@ -2,6 +2,18 @@
 
 {% block content %}
 <h3>Fila Médica</h3>
+<style>
+@keyframes blink {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+.badge-blink {
+  animation: blink 1s infinite;
+  font-weight: bold;
+}
+</style>
 
 {% if triagens %}
 <table class="table table-dark table-hover mt-3">
@@ -10,33 +22,51 @@
       <th>Paciente</th>
       <th>Prioridade</th>
       <th>Horário</th>
+      <th>Espera</th>
+
       <th>Ação</th>
     </tr>
   </thead>
   <tbody>
-    {% for triagem in triagens %}
-    <tr>
-      <td>{{ triagem.paciente.nome_completo }}</td>
-      <td>
-  <span class="badge 
-    {% if triagem.prioridade == 'vermelho' %}bg-danger
-    {% elif triagem.prioridade == 'amarelo' %}bg-warning text-dark
-    {% elif triagem.prioridade == 'verde' %}bg-success
-    {% elif triagem.prioridade == 'azul' %}bg-primary
-    {% endif %}">
-    {{ triagem.get_prioridade_display }}
-  </span>
-</td>
+  {% for triagem in triagens %}
+  <tr>
+    <td>{{ triagem.paciente.nome_completo }}</td>
 
-      <td>{{ triagem.data_hora|date:"d/m/Y H:i" }}</td>
-      <td>
-        <a href="{% url 'novo_atendimento' %}" class="btn btn-success btn-sm">
-          Atender
-        </a>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
+    <td>
+      {% if triagem.prioridade == 'vermelho' %}
+        <span class="badge badge-blink bg-danger">
+          {{ triagem.get_prioridade_display }}
+        </span>
+      {% elif triagem.prioridade == 'amarelo' %}
+        <span class="badge bg-warning text-dark">
+          {{ triagem.get_prioridade_display }}
+        </span>
+      {% elif triagem.prioridade == 'verde' %}
+        <span class="badge bg-success">
+          {{ triagem.get_prioridade_display }}
+        </span>
+      {% elif triagem.prioridade == 'azul' %}
+        <span class="badge bg-primary">
+          {{ triagem.get_prioridade_display }}
+        </span>
+      {% endif %}
+    </td>
+
+    <td>{{ triagem.data_hora|date:"d/m/Y H:i" }}</td>
+
+    <td>
+      {{ triagem.data_hora|timesince:now }}
+    </td>
+
+    <td>
+      <a href="{% url 'novo_atendimento' %}" class="btn btn-success btn-sm">
+        Atender
+      </a>
+    </td>
+  </tr>
+  {% endfor %}
+</tbody>
+
 </table>
 {% else %}
 <p>Nenhum paciente aguardando atendimento médico.</p>

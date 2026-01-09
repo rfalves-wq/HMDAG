@@ -34,7 +34,7 @@ def criar_atendimento(request):
     })
 
 
-from triagem.models import Triagem
+from django.utils import timezone
 
 def fila_medica(request):
     triagens = Triagem.objects.filter(
@@ -42,5 +42,7 @@ def fila_medica(request):
     ).order_by('-prioridade', 'data_hora')
 
     return render(request, 'atendimento/fila_medica.html', {
-        'triagens': triagens
+        'triagens': triagens,
+        'now': timezone.now()
     })
+
