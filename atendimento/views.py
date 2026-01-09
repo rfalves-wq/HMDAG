@@ -36,10 +36,26 @@ def criar_atendimento(request):
 
 from django.utils import timezone
 
+from django.shortcuts import render
+from django.db.models import Case, When, IntegerField
+from django.utils import timezone
+from triagem.models import Triagem
+
 def fila_medica(request):
-    triagens = Triagem.objects.filter(
-        status='aguardando_medico'
-    ).order_by('-prioridade', 'data_hora')
+    triagens = (
+        Triagem.objects
+        .filter(status='aguardando_medico')
+        .annotate(
+            prioridade_ordem=Case(
+                When(prioridade='vermelho', then=0),
+                When(prioridade='amarelo', then=1),
+                When(prioridade='verde', then=2),
+                When(prioridade='azul', then=3),
+                output_field=IntegerField()
+            )
+        )
+        .order_by('prioridade_ordem', 'data_hora')
+    )
 
     return render(request, 'atendimento/fila_medica.html', {
         'triagens': triagens,
