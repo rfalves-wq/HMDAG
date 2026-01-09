@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Fila Médica</h3>
+
+{% if triagens %}
+<table class="table table-dark table-hover mt-3">
+  <thead>
+    <tr>
+      <th>Paciente</th>
+      <th>Prioridade</th>
+      <th>Horário</th>
+      <th>Ação</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for triagem in triagens %}
+    <tr>
+      <td>{{ triagem.paciente.nome_completo }}</td>
+      <td>
+  <span class="badge 
+    {% if triagem.prioridade == 'vermelho' %}bg-danger
+    {% elif triagem.prioridade == 'amarelo' %}bg-warning text-dark
+    {% elif triagem.prioridade == 'verde' %}bg-success
+    {% elif triagem.prioridade == 'azul' %}bg-primary
+    {% endif %}">
+    {{ triagem.get_prioridade_display }}
+  </span>
+</td>
+
+      <td>{{ triagem.data_hora|date:"d/m/Y H:i" }}</td>
+      <td>
+        <a href="{% url 'novo_atendimento' %}" class="btn btn-success btn-sm">
+          Atender
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>Nenhum paciente aguardando atendimento médico.</p>
+{% endif %}
+
+{% endblock %}

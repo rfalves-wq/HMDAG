@@ -13,9 +13,10 @@ class Triagem(models.Model):
     enfermeiro = models.ForeignKey(Enfermeiro, on_delete=models.SET_NULL, null=True, blank=True)
     data_hora = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=[
-        ('aguardando', 'Aguardando Atendimento'),
-        ('em_atendimento', 'Em Atendimento'),
-        ('concluida', 'Concluída')
+        ('aguardando', 'Aguardando Triagem'),
+    ('em_atendimento', 'Em Atendimento (Triagem)'),
+    ('aguardando_medico', 'Aguardando Médico'),
+    ('concluida', 'Concluída'),
     ], default='aguardando')
 
     prioridade = models.CharField(max_length=10, choices=PRIORIDADE_CHOICES, default='verde')

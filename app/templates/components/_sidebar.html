@@ -1,9 +1,10 @@
 <!-- Sidebar moderna e responsiva -->
-<div id="sidebar" class="bg-dark text-white d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
+<div id="sidebar"
+  class="bg-dark text-white d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
 
   <!-- Botão toggle mobile -->
-  <button class="btn btn-dark d-sm-none mb-3" type="button" data-bs-toggle="collapse"
-    data-bs-target="#menuCollapse" aria-expanded="false" aria-controls="menuCollapse" aria-label="Abrir menu">
+  <button class="btn btn-dark d-sm-none mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#menuCollapse"
+    aria-expanded="false" aria-controls="menuCollapse" aria-label="Abrir menu">
     <i class="bi bi-list fs-4"></i>
   </button>
 
@@ -40,7 +41,8 @@
       </li>
 
       <li class="nav-item w-100">
-        <a href="{% url 'tecnico_enfermagem_list' %}" class="nav-link text-white d-flex align-items-center sidebar-link">
+        <a href="{% url 'tecnico_enfermagem_list' %}"
+          class="nav-link text-white d-flex align-items-center sidebar-link">
           <i class="bi bi-hospital fs-4"></i>
           <span class="ms-2 sidebar-text">Técnico de Enfermagem</span>
         </a>
@@ -59,6 +61,19 @@
           <span class="ms-2 sidebar-text">Fila da Triagem</span>
         </a>
       </li>
+      <li class="nav-item w-100">
+        <a href="{% url 'novo_atendimento' %}" class="nav-link text-white d-flex align-items-center sidebar-link">
+          <i class="bi bi-clipboard2-pulse fs-4"></i>
+          <span class="ms-2 sidebar-text">Atendimento Médico</span>
+        </a>
+      </li>
+      <li class="nav-item w-100">
+  <a href="{% url 'fila_medica' %}"
+     class="nav-link text-white d-flex align-items-center sidebar-link">
+    <i class="bi bi-clipboard-check fs-4"></i>
+    <span class="ms-2 sidebar-text">Fila Médica</span>
+  </a>
+</li>
 
     </ul>
   </nav>
@@ -71,7 +86,8 @@
   /* Sidebar hover para mostrar texto */
   .sidebar-text {
     overflow: hidden;
-    max-width: 100%; /* Permite que o texto ocupe todo o espaço */
+    max-width: 100%;
+    /* Permite que o texto ocupe todo o espaço */
     white-space: nowrap;
     text-overflow: ellipsis;
     transition: max-width 0.3s ease, opacity 0.3s ease;
@@ -79,7 +95,8 @@
   }
 
   #sidebar:hover .sidebar-text {
-    max-width: 300px; /* Aumentei para caber nomes longos */
+    max-width: 300px;
+    /* Aumentei para caber nomes longos */
     opacity: 1;
   }
 

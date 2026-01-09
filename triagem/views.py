@@ -21,7 +21,7 @@ def triagem_atender(request, triagem_id):
         form = TriagemForm(request.POST, instance=triagem)
         if form.is_valid():
             triagem = form.save(commit=False)
-            triagem.status = 'concluida'
+            triagem.status = 'aguardando_medico'
             
             # ✅ Associa o enfermeiro logado
             if hasattr(request.user, 'enfermeiro'):
