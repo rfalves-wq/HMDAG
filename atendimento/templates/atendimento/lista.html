@@ -1,0 +1,6 @@
+<h2>Atendimentos</h2>
+<ul>
+    {% for a in atendimentos %}
+        <li>{{ a.paciente.nome_completo }} - {{ a.status }}</li>
+    {% endfor %}
+</ul>

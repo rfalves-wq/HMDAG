@@ -43,6 +43,7 @@ INSTALLED_APPS = [
      'medicos',
      'recepcao',
      'triagem',
+     'atendimento',
     
 ]
 
