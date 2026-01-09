@@ -1,56 +1,116 @@
-<div class="row flex-nowrap">
-  <div class="col-auto col-md-0 col-xl-0 px-0 bg-dark">
-    <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
-      <button class="btn btn-dark d-block d-sm-none mb-3" type="button" data-bs-toggle="collapse"
-        data-bs-target="#menuCollapse" aria-expanded="false" aria-controls="menuCollapse">
-        <i class="bi bi-list fs-4"></i>
-      </button>
-      <div class="collapse d-sm-block" id="menuCollapse">
-        <ul class="nav flex-column align-items-start" id="menu">
-          <li>
-            <a href="#" class="nav-link px-0 align-middle">
-              <i class="bi bi-speedometer2 fs-4"></i>
-              <span class="ms-1">Dashboard</span>
-            </a>
-          </li>
-          <li>
-            <a href="{% url 'pacientes:list' %}" class="nav-link px-0 align-middle">
-               <i class="bi bi-people fs-4"></i>
-              <span class="ms-1">Pacientes</span>
-            </a>
-          </li>
-          <li>
-            <a href="{% url 'enfermeiro_list' %}" class="nav-link px-0 align-middle">
-              <i class="bi bi-shop fs-4"></i>
-              <span class="ms-1">Enfermeiros</span>
-            </a>
-          </li>
-          <li>
-            <a href="{% url 'medico_list' %}" class="nav-link px-0 align-middle">
-              <i class="bi bi-tags fs-4"></i>
-              <span class="ms-1">Medicos</span>
-            </a>
-          </li>
-          <li>
-            <a href="{% url 'tecnico_enfermagem_list' %}" class="nav-link px-0 align-middle">
-              <i class="bi bi-box-seam fs-4"></i>
-              <span class="ms-1">Tenico de Enfermagem</span>
-            </a>
-          </li>
-          <li>
-            <a href="{% url 'atendimento_novo' %}" class="nav-link px-0 align-middle">
-              <i class="bi bi-arrow-down-left-square fs-4"></i>
-              <span class="ms-1">Recepção</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="nav-link px-0 align-middle">
-              <i class="bi bi-arrow-up-right-square fs-4"></i>
-              <span class="ms-1">Saídas</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <hr>
-    </div>
-  </div>
+<!-- Sidebar moderna e responsiva -->
+<div id="sidebar" class="bg-dark text-white d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
+
+  <!-- Botão toggle mobile -->
+  <button class="btn btn-dark d-sm-none mb-3" type="button" data-bs-toggle="collapse"
+    data-bs-target="#menuCollapse" aria-expanded="false" aria-controls="menuCollapse" aria-label="Abrir menu">
+    <i class="bi bi-list fs-4"></i>
+  </button>
+
+  <!-- Menu -->
+  <nav class="collapse d-sm-block w-100" id="menuCollapse" aria-label="Sidebar Navigation">
+    <ul class="nav nav-pills flex-column mb-auto w-100">
+
+      <li class="nav-item w-100">
+        <a href="#" class="nav-link text-white d-flex align-items-center sidebar-link active">
+          <i class="bi bi-speedometer2 fs-4"></i>
+          <span class="ms-2 sidebar-text">Dashboard</span>
+        </a>
+      </li>
+
+      <li class="nav-item w-100">
+        <a href="{% url 'pacientes:list' %}" class="nav-link text-white d-flex align-items-center sidebar-link">
+          <i class="bi bi-people fs-4"></i>
+          <span class="ms-2 sidebar-text">Pacientes</span>
+        </a>
+      </li>
+
+      <li class="nav-item w-100">
+        <a href="{% url 'enfermeiro_list' %}" class="nav-link text-white d-flex align-items-center sidebar-link">
+          <i class="bi bi-person-badge fs-4"></i>
+          <span class="ms-2 sidebar-text">Enfermeiros</span>
+        </a>
+      </li>
+
+      <li class="nav-item w-100">
+        <a href="{% url 'medico_list' %}" class="nav-link text-white d-flex align-items-center sidebar-link">
+          <i class="bi bi-person-heart fs-4"></i>
+          <span class="ms-2 sidebar-text">Médicos</span>
+        </a>
+      </li>
+
+      <li class="nav-item w-100">
+        <a href="{% url 'tecnico_enfermagem_list' %}" class="nav-link text-white d-flex align-items-center sidebar-link">
+          <i class="bi bi-hospital fs-4"></i>
+          <span class="ms-2 sidebar-text">Técnico de Enfermagem</span>
+        </a>
+      </li>
+
+      <li class="nav-item w-100">
+        <a href="{% url 'atendimento_novo' %}" class="nav-link text-white d-flex align-items-center sidebar-link">
+          <i class="bi bi-receipt fs-4"></i>
+          <span class="ms-2 sidebar-text">Recepção</span>
+        </a>
+      </li>
+
+      <li class="nav-item w-100">
+        <a href="{% url 'fila_triagem' %}" class="nav-link text-white d-flex align-items-center sidebar-link">
+          <i class="bi bi-list-check fs-4"></i>
+          <span class="ms-2 sidebar-text">Fila da Triagem</span>
+        </a>
+      </li>
+
+    </ul>
+  </nav>
+
+  <hr class="text-white my-3 w-100">
+</div>
+
+<!-- CSS inline ou arquivo principal -->
+<style>
+  /* Sidebar hover para mostrar texto */
+  .sidebar-text {
+    overflow: hidden;
+    max-width: 100%; /* Permite que o texto ocupe todo o espaço */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: max-width 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+  }
+
+  #sidebar:hover .sidebar-text {
+    max-width: 300px; /* Aumentei para caber nomes longos */
+    opacity: 1;
+  }
+
+  /* Hover do link */
+  .sidebar-link {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .sidebar-link:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateX(5px);
+  }
+
+  /* Item ativo */
+  .sidebar-link.active {
+    background: linear-gradient(90deg, #ffc107, #fd7e14);
+    color: #000 !important;
+    font-weight: 500;
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.6);
+  }
+
+  /* Ícones alinhados */
+  .sidebar-link i {
+    min-width: 2rem;
+    text-align: center;
+  }
+
+  /* Permite quebrar linha se necessário em telas pequenas */
+  #sidebar:hover .sidebar-text {
+    white-space: normal;
+  }
+</style>

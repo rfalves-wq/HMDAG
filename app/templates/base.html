@@ -1,25 +1,190 @@
 <!DOCTYPE html>
-<html lang="pt-br" data-bs-theme="dark">
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>{% block title %}{% endblock %}</title>
+  <title>{% block title %}Meu Sistema{% endblock %}</title>
 
-  
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Custom CSS dashboard premium -->
+  <style>
+    /* Sidebar colapsada */
+    #sidebar {
+      width: 60px;
+      background: linear-gradient(180deg, #0d6efd, #6f42c1);
+      color: #fff;
+      transition: width 0.3s;
+      overflow-x: hidden;
+      position: fixed;
+      height: 100vh;
+      z-index: 1040;
+    }
+
+    /* Sidebar expandida */
+    #sidebar.expanded {
+      width: 220px;
+    }
+
+    /* Links da sidebar */
+    #sidebar .nav-link {
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    /* Hover e destaque ativo */
+    #sidebar .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      transform: translateX(5px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    #sidebar .nav-link.active {
+      background: linear-gradient(90deg, #ffc107, #fd7e14);
+      box-shadow: 0 0 10px rgba(255, 193, 7, 0.6);
+      transform: translateX(5px);
+    }
+
+    /* Texto e submenus */
+    .sidebar-text {
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.3s, margin-left 0.3s;
+    }
+
+    #sidebar.expanded .sidebar-text {
+      opacity: 1;
+      margin-left: 0.5rem;
+    }
+
+    /* Ícones centralizados */
+    .sidebar-link i {
+      min-width: 1.5rem;
+      text-align: center;
+    }
+
+    /* Submenu */
+    .submenu {
+      display: none;
+      flex-direction: column;
+      padding-left: 1.5rem;
+    }
+
+    .submenu.show {
+      display: flex;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Header e Footer */
+    header,
+    footer {
+      background-color: #ffffff;
+      color: #000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      padding: 0.75rem 1rem;
+      margin-left: 60px; /* Ajuste para sidebar colapsada */
+      transition: margin-left 0.3s;
+    }
+
+    #sidebar.expanded ~ header,
+    #sidebar.expanded ~ footer {
+      margin-left: 220px;
+    }
+
+    /* Main content */
+    main {
+      background-color: #f8f9fa;
+      min-height: 80vh;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      margin-left: 60px;
+      transition: margin-left 0.3s;
+    }
+
+    #sidebar.expanded ~ main {
+      margin-left: 220px;
+    }
+
+    /* Tooltips customizados */
+    .sidebar-link[data-bs-toggle="tooltip"] {
+      position: relative;
+    }
+
+    /* Mobile overlay */
+    #sidebarOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      z-index: 1030;
+    }
+
+    #sidebarOverlay.active {
+      display: block;
+    }
+
+    @media (max-width: 575.98px) {
+      #sidebar {
+        left: -220px;
+      }
+
+      #sidebar.expanded {
+        left: 0;
+      }
+
+      header,
+      footer,
+      main {
+        margin-left: 0;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Overlay mobile -->
+  <div id="sidebarOverlay"></div>
+
+  <!-- Header -->
   {% include 'components/_header.html' %}
 
+  <!-- Layout principal -->
   <div class="container-fluid">
-    {% include 'components/_sidebar.html' %}
-    <div class="col py-3">
-      <div class="container mt-4">
+    <div class="row flex-nowrap">
+
+      <!-- Sidebar -->
+      {% include 'components/_sidebar.html' %}
+
+      <!-- Conteúdo principal -->
+      <div class="col py-3">
         <main>
           {% block content %}
           {% endblock %}
@@ -28,8 +193,57 @@
     </div>
   </div>
 
-  </div>
+  <!-- Footer -->
   {% include 'components/_footer.html' %}
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+  </script>
+
+  <!-- JS Sidebar interativa -->
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    // Desktop hover
+    sidebar.addEventListener('mouseenter', () => {
+      sidebar.classList.add('expanded');
+    });
+    sidebar.addEventListener('mouseleave', () => {
+      sidebar.classList.remove('expanded');
+    });
+
+    // Mobile toggle via botão
+    const toggleBtn = document.getElementById('sidebarToggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('expanded');
+        overlay.classList.toggle('active');
+      });
+    }
+
+    // Fechar sidebar ao clicar no overlay
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('expanded');
+      overlay.classList.remove('active');
+    });
+
+    // Submenus animados
+    document.querySelectorAll('.submenu-toggle').forEach(item => {
+      item.addEventListener('click', e => {
+        e.preventDefault();
+        const submenu = document.querySelector(item.getAttribute('href'));
+        submenu.classList.toggle('show');
+      });
+    });
+
+    // Inicializar tooltips Bootstrap
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  </script>
 </body>
 
 </html>
