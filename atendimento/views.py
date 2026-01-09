@@ -2,7 +2,12 @@ from django.shortcuts import render
 from triagem.models import Triagem
 from .forms import AtendimentoMedicoForm
 
+from django.shortcuts import render, redirect
+from triagem.models import Triagem
+from .forms import AtendimentoMedicoForm
+
 def criar_atendimento(request):
+    # Pega a triagem com prioridade mais alta
     triagem = Triagem.objects.filter(
         status='aguardando_medico'
     ).order_by('-prioridade', 'data_hora').first()
@@ -20,10 +25,12 @@ def criar_atendimento(request):
             atendimento.triagem = triagem
             atendimento.save()
 
-            # Finaliza a triagem após atendimento médico
+            # Finaliza a triagem
             triagem.status = 'concluida'
             triagem.save()
 
+            # REDIRECIONA PARA A FILA MÉDICA
+            return redirect('fila_medica')  # <-- nome da URL da fila_medica
     else:
         form = AtendimentoMedicoForm()
 
@@ -32,6 +39,7 @@ def criar_atendimento(request):
         'paciente': paciente,
         'triagem': triagem
     })
+
 
 
 from django.utils import timezone

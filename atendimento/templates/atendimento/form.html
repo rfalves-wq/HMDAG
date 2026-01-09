@@ -1,28 +1,73 @@
-<h2>Atendimento Médico</h2>
+{% extends 'base.html' %}
 
-<h4>Paciente</h4>
-<p><strong>{{ paciente.nome_completo }}</strong></p>
+{% block title %}Atendimento Médico{% endblock %}
 
-<hr>
+{% block content %}
+<div class="container mt-4">
 
-<h4>Triagem</h4>
+    <!-- Título -->
+    <h2 class="mb-4 text-center">Atendimento Médico</h2>
 
-{% if triagem %}
-<ul>
-    <li>Pressão: {{ triagem.pressao_arterial }}</li>
-    <li>Temperatura: {{ triagem.temperatura }}</li>
-    <li>Frequência Cardíaca: {{ triagem.frequencia_cardiaca }}</li>
-    <li>Saturação: {{ triagem.saturacao }}</li>
-    <li>Prioridade: {{ triagem.prioridade }}</li>
-</ul>
-{% else %}
-<p><strong>Paciente sem triagem registrada</strong></p>
-{% endif %}
+    <!-- Paciente -->
+    <div class="card mb-4 border-primary shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <strong>Paciente</strong>
+        </div>
+        <div class="card-body">
+            <p class="fs-5">{{ paciente.nome_completo }}</p>
+        </div>
+    </div>
 
-<hr>
+    <!-- Triagem -->
+    <div class="card mb-4 border-warning shadow-sm">
+        <div class="card-header bg-warning text-dark">
+            <strong>Triagem</strong>
+        </div>
+        <div class="card-body">
+            {% if triagem %}
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Pressão Arterial:</span>
+                        <span>{{ triagem.pressao_arterial }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Temperatura:</span>
+                        <span>{{ triagem.temperatura }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Frequência Cardíaca:</span>
+                        <span>{{ triagem.frequencia_cardiaca }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Saturação:</span>
+                        <span>{{ triagem.saturacao }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Prioridade:</span>
+                        <span>{{ triagem.prioridade }}</span>
+                    </li>
+                </ul>
+            {% else %}
+                <p class="text-danger"><strong>Paciente sem triagem registrada</strong></p>
+            {% endif %}
+        </div>
+    </div>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Salvar Atendimento</button>
-</form>
+    <!-- Formulário de Atendimento -->
+    <div class="card mb-4 border-success shadow-sm">
+        <div class="card-header bg-success text-white">
+            <strong>Registrar Atendimento</strong>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success mt-3 w-100">
+                    <i class="bi bi-check-circle"></i> Salvar Atendimento
+                </button>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
