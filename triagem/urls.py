@@ -8,4 +8,5 @@ urlpatterns = [
     
     path('fila/', views.fila_triagem, name='fila_triagem'),
     path('atender/<int:triagem_id>/', views.triagem_atender, name='triagem_atender'),
+    
 ]

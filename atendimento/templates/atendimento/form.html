@@ -1,6 +1,28 @@
-<h2>Novo Atendimento</h2>
+<h2>Atendimento Médico</h2>
+
+<h4>Paciente</h4>
+<p><strong>{{ paciente.nome_completo }}</strong></p>
+
+<hr>
+
+<h4>Triagem</h4>
+
+{% if triagem %}
+<ul>
+    <li>Pressão: {{ triagem.pressao_arterial }}</li>
+    <li>Temperatura: {{ triagem.temperatura }}</li>
+    <li>Frequência Cardíaca: {{ triagem.frequencia_cardiaca }}</li>
+    <li>Saturação: {{ triagem.saturacao }}</li>
+    <li>Prioridade: {{ triagem.prioridade }}</li>
+</ul>
+{% else %}
+<p><strong>Paciente sem triagem registrada</strong></p>
+{% endif %}
+
+<hr>
+
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Salvar</button>
+    <button type="submit">Salvar Atendimento</button>
 </form>
